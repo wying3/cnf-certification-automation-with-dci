@@ -8,4 +8,10 @@ Second part is to illustrate the process of recertifying container projects that
 
 ## Manual Certification Container Process
 
+![Manual Process](img/manual-process.png)
+
+## Automation Container Certification Flow
+
+![Automation Container Cert Workflow](img/automation-container-certification-flow.png)
+
 
