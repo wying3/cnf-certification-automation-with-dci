@@ -37,6 +37,7 @@ $ sudo dnf upgrade --refresh --repo dci -y
 ```shellSession
 $ sudo dnf remove dci-openshift-app-agent -y
 $ sudo dnf install dci-openshift-app-agent -y
+```
 
 ## Manual Certification Container Process
 
