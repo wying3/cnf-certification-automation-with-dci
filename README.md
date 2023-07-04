@@ -5,6 +5,9 @@ Table of Contents
 * [Automate certification process by utilizing DCI to interact with the catalog backend](#automate-certification-process-by-utilizing-dci-to-interact-with-the-catalog-backend)
    * [Summary](#summary)
    * [Prerequisites](#prerequisites)
+   * [Manual Certification Container Process](#manual-certification-container-process)
+   * [Automation Container Certification Flow](#automation-container-certification-flow)
+      * [Auto Publish Preparations](#auto-publish-preparations)
       * [Auto Publish Settings Configuration](#auto-publish-settings-configuration)
    * [Recertify Certification Container Projects](#recertify-certification-container-projects)
       * [Recertify Settings Configuration](#recertify-settings-configuration)
@@ -12,6 +15,7 @@ Table of Contents
       * [Global Variables](#global-variables)
       * [Variables to define for each cnf_to_certify](#variables-to-define-for-each-cnf_to_certify)
       * [Variables to define for project settings under cert_listings main variable](#variables-to-define-for-project-settings-under-cert_listings-main-variable)
+      * [Example Configuration of Openshift-cnf certification project creation](#example-configuration-of-openshift-cnf-certification-project-creation)
    * [How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated](#how-to-run-dci-auto-publish-recertify-and-openshift-cnf-vendor-validated)
  
 # Automate certification process by utilizing DCI to interact with the catalog backend
