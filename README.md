@@ -40,11 +40,9 @@ $ sudo dnf install dci-openshift-app-agent -y
 ```
 
 ## Manual Certification Container Process
-
 ![Manual Process](img/manual-process.png)
 
 ## Automation Container Certification Flow
-
 ![Automation Container Cert Workflow](img/automation-container-certification-flow.png)
 
 ### Auto Publish Preparations
@@ -184,7 +182,7 @@ published                     | false                                | Boolean t
 type                          | "container stack"                    | String. Type of product list
 email_address                 | "mail@example.com"                   | String. Email address is needed for creating openshift-cnf project
 
-#$# Example Configuration of Openshift-cnf certification project creation
+### Example Configuration of Openshift-cnf certification project creation
 ```yaml
 ---
 dci_topic: OCP-4.11
@@ -228,5 +226,4 @@ $ export KUBECONFIG=/var/lib/dci-openshift-app-agent/demo-kubeconfig
 - Start RUN DCI OpenShift App Agent  
 ```shellSession
 $ dci-openshift-app-agent-ctl -s -- -vv
-```
 ```
