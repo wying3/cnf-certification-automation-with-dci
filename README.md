@@ -1,3 +1,19 @@
+Table of Contents
+=================
+
+* [Automate certification process by utilizing DCI to interact with the catalog backend](#automate-certification-process-by-utilizing-dci-to-interact-with-the-catalog-backend)
+   * [Summary](#summary)
+   * [Manual Certification Container Process](#manual-certification-container-process)
+   * [Automation Container Certification Flow](#automation-container-certification-flow)
+      * [Auto Publish Preparations](#auto-publish-preparations)
+      * [Auto Publish Settings Configuration](#auto-publish-settings-configuration)
+   * [Recertify Certification Container Projects](#recertify-certification-container-projects)
+      * [Recertify Settings Configuration](#recertify-settings-configuration)
+   * [Automate creation of the Openshift-cnf project for Vendor Validated](#automate-creation-of-the-openshift-cnf-project-for-vendor-validated)
+      * [Global Variables](#global-variables)
+      * [Variables to define for each cnf_to_certify](#variables-to-define-for-each-cnf_to_certify)
+      * [Variables to define for project settings under cert_listings main variable](#variables-to-define-for-project-settings-under-cert_listings-main-variable)
+ 
 # Automate certification process by utilizing DCI to interact with the catalog backend
 This repository demonstrates how to automate the certification of container projects for CNFs. This includes recertifying container images, as well as fully automating the end-to-end process of creating, updating, attaching, and publishing container projects for multiple images at once.
 
