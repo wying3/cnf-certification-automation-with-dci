@@ -19,12 +19,29 @@ Table of Contents
    * [How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated](#how-to-run-dci-auto-publish-recertify-and-openshift-cnf-vendor-validated)
  
 # Automate certification process by utilizing DCI to interact with the catalog backend
-This repository demonstrates how to automate the certification of container projects for CNFs. This includes recertifying container images, as well as fully automating the end-to-end process of creating, updating, attaching, and publishing container projects for multiple images at once.
+This repository showcases the process of automating the certification of container projects and their subsequent automatic publication. This encompasses the reevaluation of container images for recertification and the automatic creation of an `Openshift-cnf` certification project for `Vendor Validate`.
 
-## Summary
-The objective of this repository is to demonstrate how to improve the container certification process by leveraging the new features of DCI. The process involves creating container projects, updating mandatory parameters, testing and scanning container images, attaching a product listing, and automating the publishing of container projects once all criteria are satisfied.
+## Purpose
+The purpose of this repository is to showcase the enhancement of the container certification process through the utilization of the new features provided by DCI. The process entails the creation of container projects, the modification of mandatory parameters, the testing and scanning of container images, the inclusion of a product listing, and the automation of container project publication once all requirements are met.
 
-Second part is to illustrate the process of recertifying container projects that already exist in the catalog when a new software release is available. This involves updating the version of the container, including its digest and tag, and republishing it to the catalog.
+In the second part, we demonstrate the procedure for recertifying existing container projects in the catalog when a new software release becomes available. This involves updating the container's version, including its digest and tag, and republishing it in the catalog.
+
+Lastly, we introduce a new process where the creation of the Openshift-cnf certification project is integrated into the workflow. Previously, the Vendor Validated partner CNF required a separate step, but now, once the container and helm chart projects are certified, the Openshift-cnf project will be automatically generated. This addition enhances the automation capabilities of DCI. 
+
+## Benefits
+Automating CNF certification with DCI offers several benefits that can greatly enhance the overall certification process. Here are some specific details on how automation can save time and money, reduce errors, and improve the quality of the certification process:
+
+**Time-saving:** Automation streamlines the certification process by eliminating manual and repetitive tasks. Tasks such as creating container projects, updating parameters, testing and scanning images, attaching product listings, and publishing projects can be performed automatically, significantly reducing the time required for certification.
+
+**Cost-effective:** By automating the certification process, organizations can save costs associated with manual labor and resources. With reduced manual intervention, fewer personnel are required to manage the certification process, resulting in cost savings for the organization.
+
+**Error reduction:** Manual processes are prone to human errors, which can lead to incorrect certifications or inconsistencies in the certification process. Automation helps minimize these errors by executing predefined and standardized procedures consistently and accurately. This ensures that all necessary steps are followed correctly, improving the reliability and accuracy of the certification process.
+
+**Improved efficiency:** Automation enables faster and more efficient execution of tasks. With DCI automating the creation of container projects, updating versions, and republishing to the catalog, the recertification process becomes smoother and more efficient. This allows organizations to quickly respond to new software releases and keep their catalog up to date.
+
+**Enhanced quality control:** Automation helps enforce consistent and standardized practices throughout the certification process. By automating the testing and scanning of container images, organizations can ensure that all necessary quality checks are performed consistently and thoroughly. This leads to higher-quality certifications and better overall quality control.
+
+**Scalability:** As the number of container projects and certifications increases, manual processes become increasingly challenging to manage. Automation with DCI allows for easy scalability, as the system can handle a larger volume of certifications without sacrificing efficiency or quality.
 
 ## Prerequisites
 - Minimum DCI Openshift APP Agent version
@@ -37,7 +54,7 @@ Follow this link if upgrade/remove/install NOT workking [install-dci-packages](h
 ```shellSession
 $ sudo dnf upgrade --refresh --repo dci -y
  ```
- - if upgrade gets issue then try following:
+- if upgrade gets issue then try following:  
 ```shellSession
 $ sudo dnf remove dci-openshift-app-agent -y
 $ sudo dnf install dci-openshift-app-agent -y
