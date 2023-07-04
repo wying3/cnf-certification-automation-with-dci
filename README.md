@@ -22,6 +22,22 @@ The objective of this repository is to demonstrate how to improve the container 
 
 Second part is to illustrate the process of recertifying container projects that already exist in the catalog when a new software release is available. This involves updating the version of the container, including its digest and tag, and republishing it to the catalog.
 
+## Prerequisites
+- Minimum DCI Openshift APP Agent version
+```shellSession
+$ rpm -qa|grep dci-openshift-agent-0.5.5
+dci-openshift-agent-0.5.5-1.202305041845git07fb16b9.el8.noarch
+```
+- Upgrade or re-install the latest DCI Repo
+Follow this link if upgrade/remove/install NOT workking [install-dci-packages](https://blog.distributed-ci.io/install-openshift-on-baremetal-using-dci.html#dci-packages)
+```shellSession
+$ sudo dnf upgrade --refresh --repo dci -y
+ ```
+ - if upgrade gets issue then try following:
+```shellSession
+$ sudo dnf remove dci-openshift-app-agent -y
+$ sudo dnf install dci-openshift-app-agent -y
+
 ## Manual Certification Container Process
 
 ![Manual Process](img/manual-process.png)
@@ -98,7 +114,7 @@ cert_settings:
 cert_listings:
   published: true
   type: "container stack"
-  pyxis_product_list_identifier: "642a2aff90de6580a53c2f66"  # product list id for container projects
+  pyxis_product_list_identifier: "yyyyyyyyyyyyyyyyy"  # product list id for container projects
 
 pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/demo-pyxis-apikey.txt"
 dci_gits_to_components: []
@@ -198,4 +214,18 @@ cert_listings:
 pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/pyxis-apikey.txt"
 dci_gits_to_components: []
 ...
+```
+## How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated
+- Login to DCI user  
+```shellSession
+$ su - dci-openshift-app-agent
+```
+- Export KUBECONFIG  
+```shellSession
+$ export KUBECONFIG=/var/lib/dci-openshift-app-agent/demo-kubeconfig
+```
+- Start RUN DCI OpenShift App Agent  
+```shellSession
+$ dci-openshift-app-agent-ctl -s -- -vv
+```
 ```
