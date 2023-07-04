@@ -250,6 +250,4 @@ $ dci-openshift-app-agent-ctl -s -- -vv
 ```
 ## Known Issues
 - Must Gather Log Disable  
-Some partners have more OpenShift nodes and their lab is in disconnected environment, so proxy is needed, and when they run DCI to automate and recertify the container images, this must-gather log that collect OCP logging in OCP with 5-12 nodes and the logs size is huge for DCI to upload to Remote Server and got rejected from the partner's proxy, then causing DCI kept retry and stuck here for 2+ hours.
-Solution is to disable this must-gather log by set it to false on DCI settings.yml file.
-
+For partners with larger OpenShift clusters and disconnected labs, running DCI for container image automation and recertification can pose challenges. Uploading the must-gather log, which collects OCP logging data, becomes problematic due to its size. This can cause DCI to get stuck for over 2 hours as it retries unsuccessfully through the partner's proxy. A solution is to disable the must-gather log by setting it to "false" in the DCI settings.yml file. This allows DCI to proceed without uploading the large logs and avoids proxy-related issues.
