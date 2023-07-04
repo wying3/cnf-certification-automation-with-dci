@@ -108,7 +108,7 @@ check_for_existing_projects: true
 ignore_project_creation_errors: true
 dci_config_dirs: [/etc/dci-openshift-agent]
 partner_creds: "/var/lib/dci-openshift-app-agent/demo-auth.json"
-organization_id: 15451045
+organization_id: 12345678
 preflight_containers_to_certify:
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo1:v120"
     create_container_project: true
@@ -161,7 +161,7 @@ dci_configuration: Using DCI to Recertify the Certification container Project
 preflight_test_certified_image: true
 check_for_existing_projects: true
 ignore_project_creation_errors: true
-organization_id: 15451045
+organization_id: 12345678
 dci_config_dirs: [/etc/dci-openshift-agent]
 partner_creds: "/var/lib/dci-openshift-app-agent/demo-auth.json"
 preflight_containers_to_certify:
