@@ -107,7 +107,7 @@ preflight_test_certified_image: true
 check_for_existing_projects: true
 ignore_project_creation_errors: true
 dci_config_dirs: [/etc/dci-openshift-agent]
-partner_creds: "/var/lib/dci-openshift-app-agent/demo-auth.json"
+partner_creds: "/var/lib/dci-openshift-app-agent/auth.json"
 organization_id: 12345678
 preflight_containers_to_certify:
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo1:v120"
@@ -136,7 +136,7 @@ cert_listings:
   type: "container stack"
   pyxis_product_list_identifier: "yyyyyyyyyyyyyyyyy"  # product list id for container projects
 
-pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/demo-pyxis-apikey.txt"
+pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/pyxis-apikey.txt"
 dci_gits_to_components: []
 ...
 ```
@@ -163,7 +163,7 @@ check_for_existing_projects: true
 ignore_project_creation_errors: true
 organization_id: 12345678
 dci_config_dirs: [/etc/dci-openshift-agent]
-partner_creds: "/var/lib/dci-openshift-app-agent/demo-auth.json"
+partner_creds: "/var/lib/dci-openshift-app-agent/auth.json"
 preflight_containers_to_certify:
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo1:v121"
     create_container_project: true
@@ -171,7 +171,7 @@ preflight_containers_to_certify:
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo2:v121"
     create_container_project: true
 
-pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/demo-pyxis-apikey.txt"
+pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/pyxis-apikey.txt"
 dci_gits_to_components: []
 ...
 ```
@@ -242,7 +242,7 @@ $ su - dci-openshift-app-agent
 ```
 - Export KUBECONFIG  
 ```shellSession
-$ export KUBECONFIG=/var/lib/dci-openshift-app-agent/demo-kubeconfig
+$ export KUBECONFIG=/var/lib/dci-openshift-app-agent/kubeconfig
 ```
 - Start RUN DCI OpenShift App Agent  
 ```shellSession
