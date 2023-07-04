@@ -25,8 +25,8 @@ Second part is to illustrate the process of recertifying container projects that
 ## Prerequisites
 - Minimum DCI Openshift APP Agent version
 ```shellSession
-$ rpm -qa|grep dci-openshift-agent-0.5.5
-dci-openshift-agent-0.5.5-1.202305041845git07fb16b9.el8.noarch
+$ rpm -qa|grep dci-openshift-agent-0.5.7
+dci-openshift-agent-0.5.7+
 ```
 - Upgrade or re-install the latest DCI Repo
 Follow this link if upgrade/remove/install NOT workking [install-dci-packages](https://blog.distributed-ci.io/install-openshift-on-baremetal-using-dci.html#dci-packages)
