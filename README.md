@@ -30,19 +30,19 @@ In the second part, we demonstrate the procedure for recertifying existing conta
 Lastly, we introduce a new process where the creation of the Openshift-cnf certification project is integrated into the workflow. Previously, the Vendor Validated partner CNF required a separate step, but now, once the container and helm chart projects are certified, the Openshift-cnf project will be automatically generated. This addition enhances the automation capabilities of DCI. 
 
 ## Benefits
-Automating CNF certification with DCI offers several benefits that can greatly enhance the overall certification process. Here are some specific details on how automation can save time and money, reduce errors, and improve the quality of the certification process:
+Automation with DCI can save time, money, and errors in the CNF certification process. It can also improve efficiency, quality control, and scalability.
 
-**Time-saving:** Automation streamlines the certification process by eliminating manual and repetitive tasks. Tasks such as creating container projects, updating parameters, testing and scanning images, attaching product listings, and publishing projects can be performed automatically, significantly reducing the time required for certification.
+**Time savings:** Automation can streamline the certification process by eliminating manual and repetitive tasks. This can save time and resources, and allow RedHat and partners to quickly respond to new software releases.  
 
-**Cost-effective:** By automating the certification process, RedHat and partners can save costs associated with manual labor and resources. With reduced manual intervention, fewer personnel are required to manage the certification process, resulting in cost savings for the organization.
+**Cost-effectiveness:** Automation can help reduce costs associated with manual labor and resources. This is because fewer personnel are required to manage the certification process.  
 
-**Error reduction:** Manual processes are prone to human errors, which can lead to incorrect certifications or inconsistencies in the certification process. Automation helps minimize these errors by executing predefined and standardized procedures consistently and accurately. This ensures that all necessary steps are followed correctly, improving the reliability and accuracy of the certification process.
+**Error reduction:** Automation can help minimize errors by executing predefined and standardized procedures consistently and accurately. This ensures that all necessary steps are followed correctly, improving the reliability and accuracy of the certification process.    
 
-**Improved efficiency:** Automation enables faster and more efficient execution of tasks. With DCI automating the creation of container projects, updating versions, and republishing to the catalog, the recertification process becomes smoother and more efficient. This allows RedHat and partners to quickly respond to new software releases and keep their catalog up to date.
+**Improved efficiency:** Automation can enable faster and more efficient execution of tasks. This can help RedHat and partners quickly respond to new software releases and keep their catalog up to date.  
 
-**Enhanced quality control:** Automation helps enforce consistent and standardized practices throughout the certification process. By automating the testing and scanning of container images, RedHat and partners can ensure that all necessary quality checks are performed consistently and thoroughly. This leads to higher-quality certifications and better overall quality control.
+**Enhanced quality control:** Automation can help enforce consistent and standardized practices throughout the certification process. This can lead to higher-quality certifications and better overall quality control.  
 
-**Scalability:** As the number of container projects and certifications increases, manual processes become increasingly challenging to manage. Automation with DCI allows for easy scalability, as the system can handle a larger volume of certifications without sacrificing efficiency or quality.
+**Scalability:** Automation with DCI allows for easy scalability, as the system can handle a larger volume of certifications without sacrificing efficiency or quality.
 
 ## Prerequisites
 - Minimum DCI Openshift APP Agent version (Recommended to use latest DCI software version)
