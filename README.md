@@ -3,7 +3,8 @@ Table of Contents
 
 * [Table of Contents](#table-of-contents)
 * [Automate certification process by utilizing DCI to interact with the catalog backend](#automate-certification-process-by-utilizing-dci-to-interact-with-the-catalog-backend)
-   * [Summary](#summary)
+   * [Purpose](#purpose)
+   * [Benefits](#benefits)
    * [Prerequisites](#prerequisites)
    * [Manual Certification Container Process](#manual-certification-container-process)
    * [Automation Container Certification Flow](#automation-container-certification-flow)
