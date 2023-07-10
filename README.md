@@ -45,7 +45,7 @@ Automating CNF certification with DCI offers several benefits that can greatly e
 **Scalability:** As the number of container projects and certifications increases, manual processes become increasingly challenging to manage. Automation with DCI allows for easy scalability, as the system can handle a larger volume of certifications without sacrificing efficiency or quality.
 
 ## Prerequisites
-- Minimum DCI Openshift APP Agent version
+- Minimum DCI Openshift APP Agent version (Recommended to use latest DCI software version)
 ```shellSession
 $ rpm -qa|grep dci-openshift-agent-0.5.7
 dci-openshift-agent-0.5.7+
@@ -251,4 +251,6 @@ $ dci-openshift-app-agent-ctl -s -- -vv
 ```
 ## Known Issues
 - Must Gather Log Disable  
-For partners with larger OpenShift clusters and disconnected labs, running DCI for container image automation and recertification can pose challenges. Uploading the must-gather log, which collects OCP logging data, becomes problematic due to its size. This can cause DCI to get stuck for over 2 hours as it retries unsuccessfully through the partner's proxy. A solution is to disable the must-gather log by setting it to "false" in the DCI settings.yml file. This allows DCI to proceed without uploading the large logs and avoids proxy-related issues.
+For partners with larger OpenShift clusters and disconnected labs, running DCI for container image automation and recertification can pose challenges. Uploading the must-gather log, which collects OCP logging data, becomes problematic due to its size. This can cause DCI to get stuck for over 2 hours as it retries unsuccessfully through the partner's proxy. A solution is to disable the must-gather log by setting it to "false" in the DCI settings.yml file. This allows DCI to proceed without uploading the large logs and avoids proxy-related issues.  
+To disable must-gather log collection, the set `do_must_gather: false` to settings.yml
+
