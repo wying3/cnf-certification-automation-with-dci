@@ -236,6 +236,10 @@ pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/pyxis-apikey.txt"
 dci_gits_to_components: []
 ...
 ```
+**Note:** New and recertified container image projects can be included in the same settings.yml file, but new container certification projects require more detailed descriptions and additional parameters in the cert_setting section. This is so that partners can easily distinguish between new and recertified images.
+
+For recertified container projects, if partners have not yet enabled auto-publish for the projects from the portal Gui, they must manually enable it before using the DCI to automate the certification process.
+
 ## How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated
 - Login to DCI user  
 ```shellSession
@@ -251,6 +255,5 @@ $ dci-openshift-app-agent-ctl -s -- -vv
 ```
 ## Known Issues
 - Must Gather Log Disable  
-For partners with larger OpenShift clusters and disconnected labs, running DCI for container image automation and recertification can pose challenges. Uploading the must-gather log, which collects OCP logging data, becomes problematic due to its size. This can cause DCI to get stuck for over 2 hours as it retries unsuccessfully through the partner's proxy. A solution is to disable the must-gather log by setting it to "false" in the DCI settings.yml file. This allows DCI to proceed without uploading the large logs and avoids proxy-related issues.  
-To disable must-gather log collection, the set `do_must_gather: false` to settings.yml
+For partners with larger OpenShift clusters and disconnected labs, running DCI for container image automation and recertification can pose challenges. Uploading the must-gather log, which collects OCP logging data, becomes problematic due to its size. This can cause DCI to get stuck for over 2 hours as it retries unsuccessfully through the partner's proxy. A solution is to To disable must-gather log collection, the set `do_must_gather: false` to settings.yml. This allows DCI to proceed without uploading the large logs and avoids proxy-related issues.  
 
