@@ -4,7 +4,6 @@ Table of Contents
 * [Table of Contents](#table-of-contents)
 * [Automate certification process by utilizing DCI to interact with the catalog backend](#automate-certification-process-by-utilizing-dci-to-interact-with-the-catalog-backend)
    * [Purpose](#purpose)
-   * [Benefits](#benefits)
    * [Prerequisites](#prerequisites)
    * [Manual Certification Container Process](#manual-certification-container-process)
    * [Automation Container Certification Flow](#automation-container-certification-flow)
@@ -28,21 +27,6 @@ The purpose of this repository is to showcase the enhancement of the container c
 In the second part, we demonstrate the procedure for recertifying existing container projects in the catalog when a new software release becomes available. This involves updating the container's version, including its digest and tag, and republishing it in the catalog.
 
 Lastly, we introduce a new process where the creation of the Openshift-cnf certification project is integrated into the workflow. Previously, the Vendor Validated partner CNF required a separate step, but now, once the container and helm chart projects are certified, the Openshift-cnf project will be automatically generated. This addition enhances the automation capabilities of DCI. 
-
-## Benefits
-Automation with DCI can save time, money, and errors in the CNF certification process. It can also improve efficiency, quality control, and scalability.
-
-**Time savings:** Automation can streamline the certification process by eliminating manual and repetitive tasks. This can save time and resources, and allow RedHat and partners to quickly respond to new software releases.  
-
-**Cost-effectiveness:** Automation can help reduce costs associated with manual labor and resources. This is because fewer personnel are required to manage the certification process.  
-
-**Error reduction:** Automation can help minimize errors by executing predefined and standardized procedures consistently and accurately. This ensures that all necessary steps are followed correctly, improving the reliability and accuracy of the certification process.    
-
-**Improved efficiency:** Automation can enable faster and more efficient execution of tasks. This can help RedHat and partners quickly respond to new software releases and keep their catalog up to date.  
-
-**Enhanced quality control:** Automation can help enforce consistent and standardized practices throughout the certification process. This can lead to higher-quality certifications and better overall quality control.  
-
-**Scalability:** Automation with DCI allows for easy scalability, as the system can handle a larger volume of certifications without sacrificing efficiency or quality.
 
 ## Prerequisites
 - Minimum DCI Openshift APP Agent version (Recommended to use latest DCI software version)
