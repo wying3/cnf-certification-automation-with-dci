@@ -246,6 +246,10 @@ For recertified container projects, if partners have not yet enabled auto-publis
 ```shellSession
 $ su - dci-openshift-app-agent
 ```
+- Prepare a settings file for different type of certification projects accordingly
+  - [Auto Publish New Container Certification Project Settings](https://github.com/ansvu/cnf-certification-automation-with-dci/tree/main#auto-publish-settings-configuration)
+  - [Recertify Container Certification Project Settings](https://github.com/ansvu/cnf-certification-automation-with-dci/tree/main#recertify-settings-configuration)
+  - [Openshift-cnf Certification Project Vendor Validated Settings](https://github.com/ansvu/cnf-certification-automation-with-dci/tree/main#example-configuration-of-openshift-cnf-certification-project-creation)  
 - Export KUBECONFIG  
 ```shellSession
 $ export KUBECONFIG=/var/lib/dci-openshift-app-agent/kubeconfig
