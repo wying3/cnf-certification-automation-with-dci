@@ -20,7 +20,7 @@ Table of Contents
    * [How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated](#how-to-run-dci-auto-publish-recertify-and-openshift-cnf-vendor-validated)
    * [Known Issues](#known-issues)
 # Automate certification process by utilizing DCI to interact with the catalog backend
-This repository showcases the process of automating the certification of container projects and their subsequent automatic publication. This encompasses the reevaluation of container images for recertification and the automatic creation of an `Openshift-cnf` certification project for `Vendor Validate`.
+This repository provides a process for automating the certification of container projects and their subsequent automatic publication. This includes the reevaluation of container images for recertification and the automatic creation of an `Openshift-cnf` certification project for Vendor Validate.
 
 ## Purpose
 The purpose of this repository is to showcase the enhancement of the container certification process through the utilization of the new features provided by DCI. The process entails the creation of container projects, the modification of mandatory parameters, the testing and scanning of container images, the inclusion of a product listing, and the automation of container project publication once all requirements are met.
