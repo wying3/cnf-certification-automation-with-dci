@@ -18,6 +18,8 @@ Table of Contents
       * [Example Configuration of Openshift-cnf certification project creation](#example-configuration-of-openshift-cnf-certification-project-creation)
    * [How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated](#how-to-run-dci-auto-publish-recertify-and-openshift-cnf-vendor-validated)
    * [Known Issues](#known-issues)
+   * [Links](#links)
+
 # Automate certification process by utilizing DCI to interact with the catalog backend
 This repository provides a process for automating the certification of container projects and their subsequent automatic publication. This includes the reevaluation of container images for recertification and the automatic creation of an `Openshift-cnf` certification project for Vendor Validate.
 
@@ -256,3 +258,6 @@ $ dci-openshift-app-agent-ctl -s -- -vv
 - Must Gather Log Disable  
 For partners with larger OpenShift clusters and disconnected labs, running DCI for container image automation and recertification can pose challenges. Uploading the must-gather log, which collects OCP logging data, becomes problematic due to its size. This can cause DCI to get stuck for over 2 hours as it retries unsuccessfully through the partner's proxy. A solution is to To disable must-gather log collection, the set `do_must_gather: false` to settings.yml. This allows DCI to proceed without uploading the large logs and avoids proxy-related issues.  
 
+## Links
+- [dci-openshift-app-agent](https://doc.distributed-ci.io/dci-openshift-app-agent/)
+- [dci-packages](https://blog.distributed-ci.io/install-openshift-on-baremetal-using-dci.html#dci-packages)
