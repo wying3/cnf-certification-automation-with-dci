@@ -148,7 +148,7 @@ In the next recertification process, we can use a similar approach to recertify 
 - Run DCI to embed Preflight to retest the container of new release and submit new report to current container project in partner portal  
 - Confirm and verify the project information under the project, then publish it to the catalog for completion recertification.  
   
-Please note that these are just general steps and may vary depending on the specific project.
+Please note that these are just general steps and may vary depending on the specific project. And also basic and general requirements to run `recertify` the container projects please use follow this [section](https://github.com/ansvu/cnf-certification-automation-with-dci/tree/main#auto-publish-preparations)
 
 ### Recertify Settings Configuration
 ```yaml
