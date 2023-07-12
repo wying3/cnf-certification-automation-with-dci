@@ -256,8 +256,12 @@ $ export KUBECONFIG=/var/lib/dci-openshift-app-agent/kubeconfig
 $ dci-openshift-app-agent-ctl -s -- -vv
 ```
 ## Known Issues
-- Must Gather Log Disable  
-For partners with larger OpenShift clusters and disconnected labs, running DCI for container image automation and recertification can pose challenges. Uploading the must-gather log, which collects OCP logging data, becomes problematic due to its size. This can cause DCI to get stuck for over 2 hours as it retries unsuccessfully through the partner's proxy. A solution is to To disable must-gather log collection, the set `do_must_gather: false` to settings.yml. This allows DCI to proceed without uploading the large logs and avoids proxy-related issues.  
+
+- Must gather log disable
+
+For partners with larger OpenShift clusters and disconnected labs, running DCI for container image automation and recertification can pose challenges. Uploading the must-gather log, which collects OCP logging data, becomes problematic due to its size. This can cause DCI to get stuck for over 2 hours as it retries unsuccessfully through the partner's proxy.
+
+A solution is to To disable must-gather log collection, the set `do_must_gather: false` to settings.yml. This allows DCI to proceed without uploading the large logs and avoids proxy-related issues.  
 
 ## Links
 - [dci-openshift-app-agent](https://doc.distributed-ci.io/dci-openshift-app-agent/)
