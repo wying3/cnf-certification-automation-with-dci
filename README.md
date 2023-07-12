@@ -59,7 +59,8 @@ $ sudo dnf install dci-openshift-app-agent -y
   [create remote-ci credentials](https://www.distributed-ci.io/remotecis)
 - Prepare settings.yml for container and CNF projects information  
   The details of each container certification project type are shown on next sections
-  
+- Set `auto-publish` parameter to `on` under container project settings tab
+
 ## Automation Container Certification Flow
 ![Automation Container Cert Workflow](img/automation-container-certification-flow.png)
 
