@@ -2,9 +2,8 @@ Table of Contents
 =================
 
 * [Table of Contents](#table-of-contents)
-* [Automate certification process by utilizing DCI to interact with the catalog backend](#automate-certification-process-by-utilizing-dci-to-interact-with-the-catalog-backend)
-   * [Purpose](#purpose)
-   * [Manual Container Certification Process Review](#manual-container-certification-process-review)
+* [Automate certification process by utilizing DCI to interact with the certification portal backend](#automate-certification-process-by-utilizing-dci-to-interact-with-the-certification-portal-backend)
+  
    * [Prerequisites](#prerequisites)     
    * [Automation Container Certification Flow](#automation-container-certification-flow)
       * [Auto Publish Preparations](#auto-publish-preparations)
@@ -20,28 +19,16 @@ Table of Contents
    * [Known Issues](#known-issues)
    * [Links](#links)
 
-# Automate certification process by utilizing DCI to interact with the catalog backend
-This repository provides a process for automating the certification of container projects and their subsequent automatic publication. This includes the reevaluation of container images for recertification and the automatic creation of an `Openshift-cnf` certification project for Vendor Validate.
+# Automate certification process by utilizing DCI to interact with the certification portal backend
+This repository provides an automated certification process for container projects, along with their automatic publication. It encompasses both new container certification and container new release recertification by leveraging the new features offered by DCI. It also includes new procedure of `Openshift-cnf` certification project auto creation for Vendor Validate and CNF certification.
 
-## Purpose
-The purpose of this repository is to showcase the enhancement of the container certification process through the utilization of the new features provided by DCI. The process entails the creation of container projects, the modification of mandatory parameters, the testing and scanning of container images, the inclusion of a product listing, and the automation of container project publication once all requirements are met.
+The process for certifying a new container involves creating container projects, adding or modifying mandatory project parameters, testing and scanning container images, attaching to a product listing, and auto publishing container projects once all requirements are fulfilled.
 
-In the second part, we demonstrate the procedure for recertifying existing container projects in the catalog when a new software release becomes available. This involves updating the container's version, including its digest and tag, and republishing it in the catalog.
+The process for recertifying existing container projects involves retesting and rescanning new release container images, updating the container's version, its digest and tag, and republishing to the catalog.
 
-Lastly, we introduce a new process where the creation of the Openshift-cnf certification project is integrated into the workflow. Previously, the Vendor Validated partner CNF required a separate step, but now, once the container and helm chart projects are certified, the Openshift-cnf project will be automatically generated. This addition enhances the automation capabilities of DCI. 
-
-## Manual Container Certification Process Review
-According to process, the following steps need to be performed for each single container in order to get certified.
-
-- Go to GUI of connect.redhat.com then click on create project-> container/operator/helmchart
-- Open Setting tab, Fill-in all mandatory values 
-- Run Preflight in local server to scan the image one by one with -s flag to submit result to corresponding projects created earlier
-- Create Product-list then attach certification project-id to it.
-- Set Privilege to true when Dockerfile built root-user (optional)
-- Set click publish button to publish container to catalog when all the criteria from above list are met
-
-The manual certification container process can be time-consuming and taking long time to certify / recertify a container image. In order to improve the certification process, we introduce new DCI automation features, which can help to speed up the certification processes. 
-
+Finally, an integrated process for creating the Openshift-cnf certification project has been introduced into the workflow. Previously, the partner CNF Vendor Validate required a separate steps. However, with the new enhancement implemented in DCI, once the container and helm chart projects are certified, the Openshift-cnf project will be automatically created.
+ 
+ 
 ## Prerequisites
 - Prepare a jumphost to install and run DCI then following this [link](https://doc.distributed-ci.io/dci-openshift-agent/#installation-of-dci-jumpbox)
 - Minimum DCI Openshift APP Agent version (Recommended to use latest DCI software version)
