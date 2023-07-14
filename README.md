@@ -3,7 +3,6 @@ Table of Contents
 
 * [Table of Contents](#table-of-contents)
 * [Automate certification process by utilizing DCI to interact with the certification portal backend](#automate-certification-process-by-utilizing-dci-to-interact-with-the-certification-portal-backend)
-  
    * [Prerequisites](#prerequisites)     
    * [Automation Container Certification Flow](#automation-container-certification-flow)
       * [Auto Publish Preparations](#auto-publish-preparations)
@@ -15,6 +14,8 @@ Table of Contents
       * [Variables to define for each cnf_to_certify](#variables-to-define-for-each-cnf_to_certify)
       * [Variables to define for project settings under cert_listings main variable](#variables-to-define-for-project-settings-under-cert_listings-main-variable)
       * [Example Configuration of Openshift-cnf certification project creation](#example-configuration-of-openshift-cnf-certification-project-creation)
+   * [Run Chart Verifier and TNF Suite Test Together](#run-chart-verifier-and-tnf-suite-test-together)
+      * [Example of chart-verifier and TNF Test Suite Settings Configuration](#example-of-chart-verifier-and-tnf-test-suite-settings-configuration)
    * [How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated](#how-to-run-dci-auto-publish-recertify-and-openshift-cnf-vendor-validated)
    * [Known Issues](#known-issues)
    * [Links](#links)
@@ -225,6 +226,51 @@ dci_gits_to_components: []
 
 For recertified container projects, if partners have not yet enabled auto-publish for the projects from the portal Gui, they must manually enable it before using the DCI to automate the certification process.
 
+## Run Chart Verifier and TNF Suite Test Together
+This section will show to use DCI to run chart-verifier with option `-c` or `--skip-cleanup` so CNF helm chart deploys and leave CNF PODs running then using DCI to test the TNF suite base CNF namespace. 
+
+### Example of chart-verifier and TNF Test Suite Settings Configuration
+```yaml
+---
+dci_topic: OCP-4.11
+dci_name: Chart-verifier with TNF Suite testing
+dci_configuration: DCI Chart-verifier SampleChart + TNF Suite testing
+dci_openshift_app_image: quay.io/testnetworkfunction/cnf-test-partner:latest
+do_chart_verifier: true
+dci_openshift_app_ns: avachart
+dci_teardown_on_success: false
+do_must_gather: false
+check_workload_api: false
+dci_disconnected: false
+partner_name: telcoci SampleChart
+partner_email: telco.sample@redhat.com
+github_token_path: "/opt/cache/token.txt"
+dci_charts:
+  - name: samplechart2
+    chart_file: https://github.com/ansvu/samplechart2/releases/download/samplechart-0.1.3/samplechart-0.1.3.tgz
+    #chart_values: https://github.com/ansvu/samplechart2/releases/download/samplechart-0.1.3/values.yaml
+    #install: true
+    deploy_chart: true
+    flags: "-c -W"
+    create_pr: false
+
+do_cnf_cert: true
+tnf_labels: common,telco,extended
+tnf_log_level: trace
+tnf_config:
+  - namespace: avachart
+    targetNameSpaces:
+      - avachart
+    operators_regexp:
+    exclude_connectivity_regexp:
+test_network_function_version: v4.2.4
+dci_gits_to_components: []
+...
+```
+Note: Some cases where partner wants to deploy CNF and leave it running and do not want to teardown. So with new feature from chart-verifier `1.12.1`, it adds `-c` option to allow users to skip the `cleanup` e.g. `helm uninstall`. 
+
+Result can be seen from DCI Job Server then click [here](https://www.distributed-ci.io/jobs/c65dae62-d2bb-4b28-becf-ff0975130851)
+
 ## How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated
 - Login to DCI user  
 ```shellSession
@@ -248,7 +294,7 @@ $ dci-openshift-app-agent-ctl -s -- -vv
 
 For partners with larger OpenShift clusters and disconnected labs, running DCI for container image automation and recertification can pose challenges. Uploading the must-gather log, which collects OCP logging data, becomes problematic due to its size. This can cause DCI to get stuck for over 2 hours as it retries unsuccessfully through the partner's proxy.
 
-A solution is to To disable must-gather log collection, the set `do_must_gather: false` to settings.yml. This allows DCI to proceed without uploading the large logs and avoids proxy-related issues.  
+A solution is to disable must-gather log collection, the set `do_must_gather: false` to settings.yml. This allows DCI to proceed without uploading the large logs and avoids proxy-related issues.  
 
 ## Links
 - [dci-openshift-app-agent](https://doc.distributed-ci.io/dci-openshift-app-agent/)
