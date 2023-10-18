@@ -99,12 +99,10 @@ preflight_containers_to_certify:
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo1:v120"
     create_container_project: true
     short_description: "I am doing a full-automation e2e auto-publish for following image auto-publish-ubi8-nginx-demo1:v120"
-    attach_product_listing: true
 
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo2:v120"
     create_container_project: true
     short_description: "I am doing a full-automation e2e auto-publish for following image auto-publish-ubi8-nginx-demo2:v120"
-    attach_product_listing: true
 
 cert_settings:
    auto_publish: true
@@ -121,6 +119,7 @@ cert_listings:
   published: true
   type: "container stack"
   pyxis_product_list_identifier: "yyyyyyyyyyyyyyyyy"  # product list id for container projects
+  attach_product_listing: true
 
 pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/pyxis-apikey.txt"
 dci_gits_to_components: []
@@ -144,24 +143,19 @@ Please note that these are just general steps and may vary depending on the spec
 dci_topic: OCP-4.11
 dci_name: Testing DCI to Recertify the certification container projects
 dci_configuration: Using DCI to Recertify the Certification container Project
-preflight_test_certified_image: true
 check_for_existing_projects: true
-ignore_project_creation_errors: true
 organization_id: 12345678
 dci_config_dirs: [/etc/dci-openshift-agent]
 partner_creds: "/var/lib/dci-openshift-app-agent/auth.json"
 preflight_containers_to_certify:
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo1:v121"
-    create_container_project: true
- 
+
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo2:v121"
-    create_container_project: true
 
 pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/pyxis-apikey.txt"
 dci_gits_to_components: []
 ...
 ```
-As you may have noticed, the `create_container_project` parameter is now set to `true` even when recertifying container projects. This is a new change that was recently made. The backend will now reject the creation of a container project if it is already in the active state, but the DCI will ignore this and continue with the recertification process.
 
 ## Automate creation of the Openshift-cnf project for Vendor Validated
 This feature automatically generates an OpenShift-CNF certification project when this option `create_cnf_project` set to `true`. The new feature reuses some tasks from the `create-certification-project` role, and the associated templates are stored within this feature. Currently, there are no mandatory parameters that need to be updated in the new feature.
@@ -177,7 +171,6 @@ As the new role openshift-cnf reuses some existing tasks, please refer to the de
 
 Name                     | Default                                                                    | Description
 -------------------      | ------------                                                               | -------------
-attach_product_listing   | false                                                                      | If set to true, it would attach product-listing to Openshift-cnf certification project.
 create_cnf_project       | false                                                                      | If set to true, it would create a new Openshift-cnf certification project.
 cnf_name                 | None                                                                       | If defined, it would create Openshift-cnf certification project for vendor validated, cnf_name format: `CNF25.8 + OCP4.12`
 
@@ -185,6 +178,7 @@ cnf_name                 | None                                                 
 
 Name                          | Default                              | Description
 ----------------------------- | ------------------------------------ | -------------
+attach_product_listing   | false                                                                      | If set to true, it would attach product-listing to Openshift-cnf certification project.
 pyxis_product_list_identifier | None                                 | Product-listing ID, it has to be created before. [See doc](https://redhat-connect.gitbook.io/red-hat-partner-connect-general-guide/managing-your-account/product-listing)
 published                     | false                                | Boolean to enable publishing list of products
 type                          | "container stack"                    | String. Type of product list
@@ -205,14 +199,12 @@ organization_id: 12345678
 cnf_to_certify:
   - cnf_name: "test-smf23.5 OCP4.11.5"
     create_cnf_project: true
-    attach_product_listing: true
 
   - cnf_name: "test-upf23.5 OCP4.11.5"
     create_cnf_project: true
-    attach_product_listing: true
 
 cert_listings:
-  #email_address is mandatory when creating openshift-cnf for vendor validation but does not hurt to define it
+  attach_product_listing: true
   email_address: "email@example.com"
   published: false
   type: "container stack"
