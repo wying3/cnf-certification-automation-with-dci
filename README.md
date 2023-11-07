@@ -18,7 +18,7 @@ Table of Contents
       * [Example Configuration of Openshift-cnf certification project creation](#example-configuration-of-openshift-cnf-certification-project-creation)
    * [Automate Helm Chart Certification Project](#automate-helm-chart-certification-project)
       * [Settings ForAutomate Helm Chart](#settings-for-automate-helm-chart)
-      * [Helm Chart Deploy and PR Chain](#helm-chart-deploy-and-pr-chain)
+      * [Helm Chart Deploy and PR Chain Settings](#helm-chart-deploy-and-pr-chain-settings)
    * [Run Chart Verifier and TNF Suite Test Together](#run-chart-verifier-and-tnf-suite-test-together)
       * [Example of chart-verifier and TNF Test Suite Settings Configuration](#example-of-chart-verifier-and-tnf-test-suite-settings-configuration)
    * [How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated](#how-to-run-dci-auto-publish-recertify-and-openshift-cnf-vendor-validated)
@@ -376,11 +376,11 @@ vendor:
   name: Red Hat, Inc.
 ```
 
-*Note:* It's possible that once the helm chart certification project created then we can apply the next section to deploy the helmchart and do PR request to merge.
-Of course, there is a important test and requirement where pre-test of helm chart with `chart-verifier` to generate a report.yaml and make sure that all chart-verifier test cases are passed before it can merge.
+*Note:* It's possible that once the helm chart certification project created then we can apply the next section([#Helm Chart Deploy and PR Chain Settings](https://github.com/ansvu/cnf-certification-automation-with-dci/edit/main/README.md#helm-chart-deploy-and-pr-chain-settings)) to deploy the helmchart and do PR request to merge.
+Of course, there are couple important tests and requirements where pre-test of helm chart with `chart-verifier` to generate a report.yaml and make sure that all chart-verifier test cases are passed before it can merge.
 Another pre-requisite is, the container certification must be `published` in the catalog and those images are present there. 
 
-### Helm Chart Deploy and PR Chain
+### Helm Chart Deploy and PR Chain Settings
 ```yaml
 ---
 do_chart_verifier: true
