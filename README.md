@@ -9,6 +9,8 @@ Table of Contents
       * [Auto Publish Settings Configuration](#auto-publish-settings-configuration)
    * [Recertify Certification Container Projects](#recertify-certification-container-projects)
       * [Recertify Settings Configuration](#recertify-settings-configuration)
+   * [E2E Automation Certification Of Operator Bundle Project](#e2e-automation-certification-of-operator-bundle-project)
+      * [E2E Certification Settings Of Operator Bundle](#e2e-certification-settings-of-operator-bundle)
    * [Automate creation of the Openshift-cnf project for Vendor Validated](#automate-creation-of-the-openshift-cnf-project-for-vendor-validated)
       * [Global Variables](#global-variables)
       * [Variables to define for each cnf_to_certify](#variables-to-define-for-each-cnf_to_certify)
@@ -156,6 +158,68 @@ pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/pyxis-apikey.txt"
 dci_gits_to_components: []
 ...
 ```
+## E2E Automation Certification Of Operator Bundle Project
+This is a new improvement of E2E certification of operators with DCI, where update and attach the product-listing are now automated. Tatiana from DCI team created this blog which have some details of the pre-requisite and settings, please click [end-to-end-certification-of-operators-with-dci](https://blog.distributed-ci.io/preflight-integration-in-dci.html#end-to-end-certification-of-operators-with-dci).
+
+*Note:* There are some new changes on settings which will provide on next section. And a new join blog with DCI team about these new certification improvement of DCI.
+
+### E2E Certification Settings Of Operator Bundle
+Similar settings configuration requirements of container certification project with a slightly differences suchas `github_token_path` as additional to `pyxis_product_list_identifier`, `partner_creds`(auth.json), `organization_id` and `pyxis_apikey_path`. 
+
+Name                     | Default                                                                    | Description
+-------------------      | ------------                                                               | -------------
+create_operator_project  | false                                                                      | If set to true, it would create a new a new "Operator Bundle Image" and submit test results in it
+attach_product_listing   | false                                                                      | If e2e certification then this parameters need to set to `true` to attach the product-listing ID to project.
+create_pr                | none                                                                       | If defined, Optional; use it to open the certification PR automatically in the certified-operators repository
+merge_pr                 | false                                                                      | If defined, Optional; use it to merge the certification PR automatically in the certified-operators repository
+page_size                | 200                                                                        | If defined, Optional; in case there are many archived or active projects are in the account, update if >= 200
+github_token_path        | none                                                                       | Optional; if create_pr sets to true then it requires to generate the github-token, follow [generate a github token](https://github.com/redhatci/ansible-collection-redhatci-ocp/tree/main/roles/create_certification_project#github-token)
+check_for_existing_projects | false                                                                   | If create_operator_project sets to `true`, then this parameter `check_for_existing_projects` need to set to `true` to check if project is already existed.
+organization_id          |                                                                            | If create_operator_project sets to `true`, then `organization_id` need to be defined with the account associates to this organization ID. 
+auto_publish             | false                                                                      | If e2e auto-publish the operator certification then set to `true` under `cert_settings`
+published                | false                                                                      | Similar to auto_publish purpose if e2e certification is the purpose then set to `true` under `cert_listings`
+
+Note: Parameters from cert_settings and cert_listings are mandatory 
+```yaml
+---
+dci_topic: OCP-4.13
+dci_name: Testing e2e creation operator bundle project and PR
+dci_configuration: Using DCI to scan simple operator image.
+check_for_existing_projects: true
+dci_config_dirs: [/etc/dci-openshift-app-agent]
+partner_creds: "/var/lib/dci-openshift-app-agent/demo-auth.json"
+organization_id: 15451045
+do_must_gather: false
+preflight_run_health_check: false
+page_size: 300
+github_token_path: "/var/lib/dci-openshift-app-agent/dummy-git-token.txt"
+# you could provide many operators at once.
+preflight_operators_to_certify:
+  - bundle_image: "quay.io/avu0/ava4-simple-demo-operator-bundle:v0.0.6"
+    index_image: "quay.io/avu0/ava4-ark-simple-demo-operator-catalog:v0.0.6"
+    short_description: "Describe specific about your operator bundle image"
+    create_operator_project: true
+    create_pr: true
+    merge_pr: false
+
+cert_settings:
+   auto_publish: false
+   registry_override_instruct: "<p>How to get this operator image.</p>"
+   email_address: "me@redhat.com"
+   application_categories: "Networking"
+   privileged: false
+   repository_description: "Repository Description"
+
+cert_listings:
+  published: false
+  type: "container stack"
+  pyxis_product_list_identifier: "639b4bfd27b76af009e324cb"
+  attach_product_listing: true
+
+pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/demo-pyxis-apikey.txt"
+dci_gits_to_components: []
+...
+```
 
 ## Automate creation of the Openshift-cnf project for Vendor Validated
 This feature automatically generates an OpenShift-CNF certification project when this option `create_cnf_project` set to `true`. The new feature reuses some tasks from the `create-certification-project` role, and the associated templates are stored within this feature. Currently, there are no mandatory parameters that need to be updated in the new feature.
@@ -178,7 +242,7 @@ cnf_name                 | None                                                 
 
 Name                          | Default                              | Description
 ----------------------------- | ------------------------------------ | -------------
-attach_product_listing   | false                                                                      | If set to true, it would attach product-listing to Openshift-cnf certification project.
+attach_product_listing        | false                                | If set to true, it would attach product-listing to Openshift-cnf certification project.
 pyxis_product_list_identifier | None                                 | Product-listing ID, it has to be created before. [See doc](https://redhat-connect.gitbook.io/red-hat-partner-connect-general-guide/managing-your-account/product-listing)
 published                     | false                                | Boolean to enable publishing list of products
 type                          | "container stack"                    | String. Type of product list
