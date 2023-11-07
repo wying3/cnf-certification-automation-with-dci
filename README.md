@@ -21,7 +21,7 @@ Table of Contents
       * [Helm Chart Deploy and PR Chain Settings](#helm-chart-deploy-and-pr-chain-settings)
    * [Run Chart Verifier and TNF Suite Test Together](#run-chart-verifier-and-tnf-suite-test-together)
       * [Example of chart-verifier and TNF Test Suite Settings Configuration](#example-of-chart-verifier-and-tnf-test-suite-settings-configuration)
-   * [How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated](#how-to-run-dci-auto-publish-recertify-and-openshift-cnf-vendor-validated)
+   * [How to Run DCI Auto-publish, Recertify, Operator, HelmChart and Openshift-cnf Vendor validated](#how-to-run-dci-auto-publish-recertify-operator-helmchart-and-openshift-cnf-vendor-validated)
    * [Known Issues](#known-issues)
    * [Links](#links)
 
@@ -183,13 +183,9 @@ dci_gits_to_components: []
 ...
 ```
 ## E2E Automation Certification Of Operator Bundle Project
-This is a new improvement of E2E certification of operators with DCI, where update and attach the product-listing are now automated. Tatiana from DCI team created this blog which have some details of the pre-requisite and settings, please click [end-to-end-certification-of-operators-with-dci](https://blog.distributed-ci.io/preflight-integration-in-dci.html#end-to-end-certification-of-operators-with-dci).
+This represents a new enhancement to the end-to-end (E2E) certification process for operators in conjunction with DCI. It involves the automation of updates and the attachment of product listings. Tatiana, a member of the DCI team, has authored a blog post that contains specific information about the prerequisites and settings related to this improvement. You can access the blog post by following this link: [end-to-end-certification-of-operators-with-dci](https://blog.distributed-ci.io/preflight-integration-in-dci.html#end-to-end-certification-of-operators-with-dci).
 
-*Note:* There are some new changes on settings which will provide on next section. And a new join blog with DCI team about these new certification improvement of DCI.
-
-This represents a novel enhancement to the end-to-end (E2E) certification process for operators in conjunction with DCI. It involves the automation of updates and the attachment of product listings. Tatiana, a member of the DCI team, has authored a blog post that contains specific information about the prerequisites and settings related to this improvement. You can access the blog post by following this link: [end-to-end-certification-of-operators-with-dci](https://blog.distributed-ci.io/preflight-integration-in-dci.html#end-to-end-certification-of-operators-with-dci).
-
-Please take note: The forthcoming section will introduce new changes to the settings, which will be provided in detail. Additionally, there will be a new collaborative blog post with the DCI team, delving into these recent enhancements to DCI certification.
+**Note:** The forthcoming section will introduce new changes to the settings, which will be provided in detail. Additionally, there will be a new collaborative blog post with the DCI team, delving into these recent enhancements to DCI certification.
 
 
 ### E2E Certification Settings Of Operator Bundle
@@ -383,6 +379,8 @@ vendor:
 
 ### Helm Chart Deploy and PR Chain Settings
 Upon the creation of the Helm chart certification project, we have the option to utilize the chained settings configuration from the preceding section to initiate the deployment of the Helm chart. Subsequently, we can submit a pull request (PR) for merging. It's crucial to note that there are a couple of vital prerequisites in place. Firstly, a pre-test of the Helm chart using the chart-verifier must be conducted to generate a report.yaml file, ensuring the successful completion of all chart-verifier test cases before the merge can proceed. Secondly, it is imperative that the container certification has been published in the catalog and that the corresponding images are available within the catalog as well.
+
+If you want to test helm chart PR without submit to Catalog, then please following this [sandbox-repository](https://softwarefactory-project.io/r/plugins/gitiles/dci-openshift-app-agent/+/35b28a7f30603a17d5567ebc82b2a3e2f8027d34/roles/chart-verifier)
 ```yaml
 ---
 do_chart_verifier: true
@@ -443,7 +441,7 @@ Note: Some cases where partner wants to deploy CNF and leave it running and do n
 
 Result can be seen from DCI Job Server then click [here](https://www.distributed-ci.io/jobs/c65dae62-d2bb-4b28-becf-ff0975130851)
 
-## How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated
+## How to Run DCI Auto-publish, Recertify, Operator, HelmChart and Openshift-cnf Vendor validated
 - Login to DCI user  
 ```shellSession
 $ su - dci-openshift-app-agent
@@ -451,7 +449,9 @@ $ su - dci-openshift-app-agent
 - Prepare a settings file for different type of certification projects accordingly
   - [Auto Publish New Container Certification Project Settings](https://github.com/ansvu/cnf-certification-automation-with-dci/tree/main#auto-publish-settings-configuration)
   - [Recertify Container Certification Project Settings](https://github.com/ansvu/cnf-certification-automation-with-dci/tree/main#recertify-settings-configuration)
-  - [Openshift-cnf Certification Project Vendor Validated Settings](https://github.com/ansvu/cnf-certification-automation-with-dci/tree/main#example-configuration-of-openshift-cnf-certification-project-creation)  
+  - [E2E Certification of Operator Bundle Settings](https://github.com/ansvu/cnf-certification-automation-with-dci#e2e-certification-settings-of-operator-bundle)
+  - [Automate Helm Chart Certification Settings](https://github.com/ansvu/cnf-certification-automation-with-dci#settings-for-automate-helm-chart)
+  - [Openshift-cnf Certification Project Vendor Validated Settings](https://github.com/ansvu/cnf-certification-automation-with-dci/tree/main#example-configuration-of-openshift-cnf-certification-project-creation)
 - Export KUBECONFIG  
 ```shellSession
 $ export KUBECONFIG=/var/lib/dci-openshift-app-agent/kubeconfig
