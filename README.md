@@ -17,7 +17,7 @@ Table of Contents
       * [Variables to define for project settings under cert_listings main variable](#variables-to-define-for-project-settings-under-cert_listings-main-variable)
       * [Example Configuration of Openshift-cnf certification project creation](#example-configuration-of-openshift-cnf-certification-project-creation)
    * [Automate Helm Chart Certification Project](#automate-helm-chart-certification-project)
-      * [Settings ForAutomate Helm Chart](#settings-for-automate-helm-chart)
+      * [Settings For Automate Helm Chart](#settings-for-automate-helm-chart)
       * [Helm Chart Deploy and PR Chain Settings](#helm-chart-deploy-and-pr-chain-settings)
    * [Run Chart Verifier and TNF Suite Test Together](#run-chart-verifier-and-tnf-suite-test-together)
       * [Example of chart-verifier and TNF Test Suite Settings Configuration](#example-of-chart-verifier-and-tnf-test-suite-settings-configuration)
