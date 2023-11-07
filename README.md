@@ -187,6 +187,11 @@ This is a new improvement of E2E certification of operators with DCI, where upda
 
 *Note:* There are some new changes on settings which will provide on next section. And a new join blog with DCI team about these new certification improvement of DCI.
 
+This represents a novel enhancement to the end-to-end (E2E) certification process for operators in conjunction with DCI. It involves the automation of updates and the attachment of product listings. Tatiana, a member of the DCI team, has authored a blog post that contains specific information about the prerequisites and settings related to this improvement. You can access the blog post by following this link: [end-to-end-certification-of-operators-with-dci](https://blog.distributed-ci.io/preflight-integration-in-dci.html#end-to-end-certification-of-operators-with-dci).
+
+Please take note: The forthcoming section will introduce new changes to the settings, which will be provided in detail. Additionally, there will be a new collaborative blog post with the DCI team, delving into these recent enhancements to DCI certification.
+
+
 ### E2E Certification Settings Of Operator Bundle
 Similar settings configuration requirements of container certification project with a slightly differences suchas `github_token_path` as additional to `pyxis_product_list_identifier`, `partner_creds`(auth.json), `organization_id` and `pyxis_apikey_path`. 
 
@@ -376,11 +381,8 @@ vendor:
   name: Red Hat, Inc.
 ```
 
-*Note:* It's possible that once the helm chart certification project created then we can apply the next section([#Helm Chart Deploy and PR Chain Settings](https://github.com/ansvu/cnf-certification-automation-with-dci#helm-chart-deploy-and-pr-chain-settings)) to deploy the helmchart and do PR request to merge.
-Of course, there are couple important tests and requirements where pre-test of helm chart with `chart-verifier` to generate a report.yaml and make sure that all chart-verifier test cases are passed before it can merge.
-Another pre-requisite is, the container certification must be `published` in the catalog and those images are present there. 
-
 ### Helm Chart Deploy and PR Chain Settings
+Upon the creation of the Helm chart certification project, we have the option to utilize the chained settings configuration from the preceding section to initiate the deployment of the Helm chart. Subsequently, we can submit a pull request (PR) for merging. It's crucial to note that there are a couple of vital prerequisites in place. Firstly, a pre-test of the Helm chart using the chart-verifier must be conducted to generate a report.yaml file, ensuring the successful completion of all chart-verifier test cases before the merge can proceed. Secondly, it is imperative that the container certification has been published in the catalog and that the corresponding images are available within the catalog as well.
 ```yaml
 ---
 do_chart_verifier: true
