@@ -23,28 +23,30 @@ Table of Contents
    * [Links](#links)
 
 # Automate certification process by utilizing DCI to interact with the certification portal backend
-This repository provides an automated certification process for container projects, along with their automatic publication. It encompasses both new container certification and container new release recertification by leveraging the new features offered by DCI. It also includes new procedure of `Openshift-cnf` certification project auto creation for Vendor Validate and CNF certification.
+This repository provides an automated certification process for container projects, along with their automatic publication. It encompasses both new container certification and new release recertification by leveraging offered by DCI. It also includes a procedure of Openshift-cnf certification project auto creation for Vendor Validation and CNF certification.
+The process for certifying a new container involves creating a container project, adding or modifying mandatory project parameters, testing and scanning container images, attaching container projects to a product listing, and auto publishing container projects once all requirements are fulfilled.
+The process for recertifying existing container projects involves retesting and rescanning new release container images, updating the container’s version, its digest and tag, and republishing to the catalog.
 
-The process for certifying a new container involves creating container projects, adding or modifying mandatory project parameters, testing and scanning container images, attaching to a product listing, and auto publishing container projects once all requirements are fulfilled.
+Finally, a streamlined approach has been implemented, combining Vendor Validation) and CNF certification tasks into a single openshift cnf project workflow. Under this new process, Vendor Validation must be completed and published before the CNF certification task is initiated, which is optional and dependent on the Vendor Validation results. This has been automated into DCI job as well.
 
-The process for recertifying existing container projects involves retesting and rescanning new release container images, updating the container's version, its digest and tag, and republishing to the catalog.
 
-Finally, an integrated process for creating the Openshift-cnf certification project has been introduced into the workflow. Previously, the partner CNF Vendor Validate required a separate steps. However, with the new enhancement implemented in DCI, once the container and helm chart projects are certified, the Openshift-cnf project will be automatically created.
  
  
 ## Prerequisites
-- Prepare a jumphost to install and run DCI then following this [link](https://doc.distributed-ci.io/dci-openshift-agent/#installation-of-dci-jumpbox)
-- Minimum DCI Openshift APP Agent version (Recommended to use latest DCI software version)
-- Upgrade or re-install the latest DCI Repo
-Follow this link if upgrade/remove/install NOT workking [install-dci-packages](https://blog.distributed-ci.io/install-openshift-on-baremetal-using-dci.html#dci-packages)
-```shellSession
+
+- Set up a jumphost with internet access, install the DCI app agent, detailed guide can be found in this link
+- It is recommended consistently check latest version of the DCI app agent package, and upgrade to latest version if it not before to use
 $ sudo dnf upgrade --refresh --repo dci -y
- ```
-- if upgrade gets issue then try following:  
-```shellSession
+- If the upgrade or re-installation of the latest DCI repository is not functioning correctly, try using the "install-dci-packages" method provided in the following link above
+	
 $ sudo dnf remove dci-openshift-app-agent -y
-$ sudo dnf install dci-openshift-app-agent -y
-```
+	$ sudo dnf install dci-openshift-app-agent -y
+- DCI Control server credential create remote-ci credentials
+- Prepare settings.yml for container and CNF projects information
+The details of each container certification project type are shown on next sections
+- Set auto-publish parameter to ON under container project settings tab (connect.redhat.com)
+
+
 - DCI Control server credential
   [create remote-ci credentials](https://www.distributed-ci.io/remotecis)
 - Prepare settings.yml for container and CNF projects information  
@@ -56,14 +58,35 @@ $ sudo dnf install dci-openshift-app-agent -y
 
 ### Auto Publish Preparations
 
-- OCP and DCI ENV (included dcirc.sh,install.yml etc..)  
+- OCP and DCI ENV (included dcirc.sh,install.yml etc..)
 Any OCP Cluster and a helper node with DCI RPM packages installed
- 
-- **Settings.yml**  
+- Settings.yml
 A Settings with DCI auto-publish enhancement feature
- 
-- **Auth.json**    
-Docker Authentication to access container repo on private registry server  
+- Auth.json
+Docker Authentication file to access OCI compatible container repo on partner private registry.
+Here is a example of using quay.io registry and run podman/docker on your jumphost and linux machine , 
+   - Login to your private registry server
+   
+    ``` 
+    $ podman login -u testuser quay.io
+    ```
+   - use echo command to locate your auth.json file for your private registry:
+      ```
+      $ echo $XDG_RUNTIME_DIR
+	        /run/user/4205315/containers/auth.json
+      ```  
+more info can be found this link
+If you are using other OCI compatible container repository, just get auth.json ready for tool to use
+- Pyxis-apikey.txt
+A token to access specific partner portal( connect.redhat.com) Pyxis  data using REST API. Create Pyxis API Key 
+- Kubeconfig
+A kubeconfig that is used to access the OCP cluster on which CNF with all its artifacts will either be deployed or has already been deployed for CNF certification test
+- Product-listing ID
+Before a container or helm chart/operator can be publicly listed into RedHat catalog, a Product-Listing must be created, it only needs to be created once according to CNF type. Follow this link to [Create-Product-Listing](https://connect.redhat.com/manage/products)
+- Organization ID
+Mandatory when using create_container_project. Company ID will be used for the verification of the container certification project Organization-ID Company-Profile. 
+
+
 Login to your private registry server:
 ```shellSession
 $ podman login -u testuser quay.io
