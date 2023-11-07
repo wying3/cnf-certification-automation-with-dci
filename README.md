@@ -16,6 +16,9 @@ Table of Contents
       * [Variables to define for each cnf_to_certify](#variables-to-define-for-each-cnf_to_certify)
       * [Variables to define for project settings under cert_listings main variable](#variables-to-define-for-project-settings-under-cert_listings-main-variable)
       * [Example Configuration of Openshift-cnf certification project creation](#example-configuration-of-openshift-cnf-certification-project-creation)
+   * [Automate Helm Chart Certification Project](#automate-helm-chart-certification-project)
+      * [Settings ForAutomate Helm Chart](#settings-for-automate-helm-chart)
+      * [Helm Chart Deploy and PR Chain](#helm-chart-deploy-and-pr-chain)
    * [Run Chart Verifier and TNF Suite Test Together](#run-chart-verifier-and-tnf-suite-test-together)
       * [Example of chart-verifier and TNF Test Suite Settings Configuration](#example-of-chart-verifier-and-tnf-test-suite-settings-configuration)
    * [How to Run DCI Auto-publish, Recertify and Openshift-cnf Vendor validated](#how-to-run-dci-auto-publish-recertify-and-openshift-cnf-vendor-validated)
@@ -114,9 +117,7 @@ Mandatory when using create_container_project. Company ID will be used for the v
 dci_topic: OCP-4.11
 dci_name: Testing DCI to create certification Project Automatic and Update mandatory settings and publish
 dci_configuration: Using DCI create project,update,submit result and auto-publish
-preflight_test_certified_image: true
 check_for_existing_projects: true
-ignore_project_creation_errors: true
 dci_config_dirs: [/etc/dci-openshift-agent]
 partner_creds: "/var/lib/dci-openshift-app-agent/auth.json"
 organization_id: 12345678
@@ -201,6 +202,7 @@ check_for_existing_projects | false                                             
 organization_id          |                                                                            | If create_operator_project sets to `true`, then `organization_id` need to be defined with the account associates to this organization ID. 
 auto_publish             | false                                                                      | If e2e auto-publish the operator certification then set to `true` under `cert_settings`
 published                | false                                                                      | Similar to auto_publish purpose if e2e certification is the purpose then set to `true` under `cert_listings`
+pyxis_product_list_identifier |                                                                       | This product-listing ID must create manually and define here when attach_product_listing sets to `true` in cert_listings section
 
 Note: Parameters from cert_settings and cert_listings are mandatory 
 ```yaml
@@ -236,7 +238,7 @@ cert_settings:
 cert_listings:
   published: false
   type: "container stack"
-  pyxis_product_list_identifier: "639b4bfd27b76af009e324cb"
+  pyxis_product_list_identifier: "yyyyyyyyyyyyyyyyyyyyyyyy"
   attach_product_listing: true
 
 pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/demo-pyxis-apikey.txt"
@@ -278,7 +280,6 @@ dci_topic: OCP-4.11
 dci_name: Testing Openshift-cnf auto creation and attach
 dci_configuration: Using DCI create cnf project and attach product-list
 check_for_existing_projects: true
-ignore_project_creation_errors: true
 dci_config_dirs: [/etc/dci-openshift-agent]
 partner_creds: "/var/lib/dci-openshift-app-agent/auth.json"
 organization_id: 12345678
@@ -305,6 +306,98 @@ dci_gits_to_components: []
 
 For recertified container projects, if partners have not yet enabled auto-publish for the projects from the portal Gui, they must manually enable it before using the DCI to automate the certification process.
 
+## Automate Helm Chart Certification Project
+This new helm chart feature will automate creating the helm chart certification projects, update mandatory parametes and attach the product-listing with option to set auto-publish on or off.
+
+### Settings For Automate Helm Chart
+Note: For this automation to work, both cert_settings and cert_listings are mandatory.
+
+Name                     | Default                                                                    | Description
+-------------------      | ------------                                                               | -------------
+create_helmchart_project | false                                                                      | If set to true, it would create a new helm chart certification project
+attach_product_listing   | false                                                                      | If set to `true` it will attach the product-listing ID to project
+repository               | none                                                                       | Define the repository helmchart name
+distribution_method      | false                                                                      | Two options to choose 1. undistributed(Web catalog:Recommended) 2.external(charts.openshift.io)
+chart_name               | none	                                                                      | Define a chartname that will be create on backend and it will be the same chartname in OWNERS file
+short_description        | none                                                                       | Describe specific about this helm chart functional
+github_usernames         | none                                                                       | Define github username here that will be updated on OWNERS file
+published                | false                                                                      | If it sets to `true`, it will set publish on in product-listing
+organization_id          |                                                                            | If create_operator_project sets to `true`, then `organization_id` need to be defined with the account associates to this organization ID. 
+pyxis_product_list_identifier |                                                                       | This product-listing ID must create manually and define here when attach_product_listing sets to `true` in cert_listings section
+pyxis_apikey_path        |                                                                            | As usual when create project on Backend, pyxis API-key is required
+
+Other parameters are under cert_settings and cert_listings are not mentioned above, but they are mandatory and update accordingly to its meaning.
+
+```yaml
+---
+dci_topic: OCP-4.12
+dci_name: Testing DCI to create certification Project for Helm Chart Automatic
+dci_configuration: Use DCI to Automate Helm Chart Project Creation
+check_for_existing_projects: true
+dci_config_dirs: [/etc/dci-openshift-agent]
+organization_id: 15451045
+do_must_gather: false
+page_size: 300
+helmchart_to_certify:
+  - repository: "https://github.com/ansvu/testchart13"
+    short_description: "This is a short description testchart13"
+    chart_name: "testchart13"
+    create_helmchart_project: true
+
+cert_settings:
+   email_address: "helmchart@redhat.com"
+   distribution_method: "undistributed"
+   github_usernames: "ansvu"
+   application_categories: "Networking"
+   long_description: "This is a long description about this sample chart"
+   distribution_instructions: "You must be present to get this helm-chart!"
+
+cert_listings:
+  attach_product_listing: true
+  published: false
+  type: "container stack"
+  pyxis_product_list_identifier: "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+
+pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/demo-pyxis-apikey.txt"
+dci_gits_to_components: []
+...
+```
+After helm chart cert project is created, it will populate the information into OWNERS file as following or [OWNERS](https://github.com/openshift-helm-charts/charts/blob/main/charts/partners/redhat-arkady-test/testchart13/OWNERS)
+```yaml
+chart:
+  name: testchart13
+  shortDescription: This is a short description testchart13
+providerDelivery: true
+publicPgpKey: unknown
+users:
+- githubUsername: ansvu
+vendor:
+  label: redhat-arkady-test
+  name: Red Hat, Inc.
+```
+
+*Note:* It's possible that once the helm chart certification project created then we can apply the next section to deploy the helmchart and do PR request to merge.
+Of course, there is a important test and requirement where pre-test of helm chart with `chart-verifier` to generate a report.yaml and make sure that all chart-verifier test cases are passed before it can merge.
+Another pre-requisite is, the container certification must be `published` in the catalog and those images are present there. 
+
+### Helm Chart Deploy and PR Chain
+```yaml
+---
+do_chart_verifier: true
+dci_openshift_app_ns: avachart
+partner_name: telcoci SampleChart
+partner_email: telco.sample@redhat.com
+github_token_path: "/opt/cache/token.txt"
+dci_charts:
+  - name: testchart13
+    chart_file: https://github.com/ansvu/samplechart2/releases/download/samplechart-0.1.3/samplechart-0.1.3.tgz
+    #chart_values: https://github.com/ansvu/samplechart2/releases/download/samplechart-0.1.3/values.yaml
+    #install: true
+    deploy_chart: true
+    create_pr: true
+```
+
+
 ## Run Chart Verifier and TNF Suite Test Together
 This section will show to use DCI to run chart-verifier with option `-c` or `--skip-cleanup` so CNF helm chart deploys and leave CNF PODs running then using DCI to test the TNF suite base CNF namespace. 
 
@@ -317,15 +410,13 @@ dci_configuration: DCI Chart-verifier SampleChart + TNF Suite testing
 dci_openshift_app_image: quay.io/testnetworkfunction/cnf-test-partner:latest
 do_chart_verifier: true
 dci_openshift_app_ns: avachart
-dci_teardown_on_success: false
 do_must_gather: false
 check_workload_api: false
-dci_disconnected: false
 partner_name: telcoci SampleChart
 partner_email: telco.sample@redhat.com
 github_token_path: "/opt/cache/token.txt"
 dci_charts:
-  - name: samplechart2
+  - name: testchart13
     chart_file: https://github.com/ansvu/samplechart2/releases/download/samplechart-0.1.3/samplechart-0.1.3.tgz
     #chart_values: https://github.com/ansvu/samplechart2/releases/download/samplechart-0.1.3/values.yaml
     #install: true
@@ -346,7 +437,7 @@ test_network_function_version: v4.2.4
 dci_gits_to_components: []
 ...
 ```
-Note: Some cases where partner wants to deploy CNF and leave it running and do not want to teardown. So with new feature from chart-verifier `1.12.1`, it adds `-c` option to allow users to skip the `cleanup` e.g. `helm uninstall`. 
+Note: Some cases where partner wants to deploy CNF and leave it running and do not want to teardown CNF. So with new feature from chart-verifier `1.12.1`, it adds `-c` option to allow users to skip the `cleanup` e.g. `helm uninstall`. 
 
 Result can be seen from DCI Job Server then click [here](https://www.distributed-ci.io/jobs/c65dae62-d2bb-4b28-becf-ff0975130851)
 
