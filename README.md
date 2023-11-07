@@ -376,7 +376,7 @@ vendor:
   name: Red Hat, Inc.
 ```
 
-*Note:* It's possible that once the helm chart certification project created then we can apply the next section([#Helm Chart Deploy and PR Chain Settings](https://github.com/ansvu/cnf-certification-automation-with-dci/edit/main/README.md#helm-chart-deploy-and-pr-chain-settings)) to deploy the helmchart and do PR request to merge.
+*Note:* It's possible that once the helm chart certification project created then we can apply the next section([#Helm Chart Deploy and PR Chain Settings](https://github.com/ansvu/cnf-certification-automation-with-dci#helm-chart-deploy-and-pr-chain-settings)) to deploy the helmchart and do PR request to merge.
 Of course, there are couple important tests and requirements where pre-test of helm chart with `chart-verifier` to generate a report.yaml and make sure that all chart-verifier test cases are passed before it can merge.
 Another pre-requisite is, the container certification must be `published` in the catalog and those images are present there. 
 
