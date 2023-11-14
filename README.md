@@ -37,7 +37,7 @@ Finally, a streamlined approach has been implemented, combining Vendor Validatio
  
 ## Prerequisites
 
-- Set up a jumphost with internet access, install the DCI app agent, detailed guide can be found in this link
+- Set up a jumphost with internet access, install the dci-openshift-appagent, detailed guide can be found in this link [dci-openshift-app-agent-install](https://doc.distributed-ci.io/dci-openshift-app-agent/) 
 - It is recommended consistently check latest version of the DCI app agent package, and upgrade to latest version if it not before to use
 ```bash
 $ sudo dnf upgrade --refresh --repo dci -y
