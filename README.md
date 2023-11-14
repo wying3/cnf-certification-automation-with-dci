@@ -39,78 +39,69 @@ Finally, a streamlined approach has been implemented, combining Vendor Validatio
 
 - Set up a jumphost with internet access, install the DCI app agent, detailed guide can be found in this link
 - It is recommended consistently check latest version of the DCI app agent package, and upgrade to latest version if it not before to use
+```bash
 $ sudo dnf upgrade --refresh --repo dci -y
+```
 - If the upgrade or re-installation of the latest DCI repository is not functioning correctly, try using the "install-dci-packages" method provided in the following link above
-	
+```bash	
 $ sudo dnf remove dci-openshift-app-agent -y
-	$ sudo dnf install dci-openshift-app-agent -y
+$ sudo dnf install dci-openshift-app-agent -y
+```
 - DCI Control server credential create remote-ci credentials
 - Prepare settings.yml for container and CNF projects information
 The details of each container certification project type are shown on next sections
 - Set auto-publish parameter to ON under container project settings tab (connect.redhat.com)
-
-
 - DCI Control server credential
   [create remote-ci credentials](https://www.distributed-ci.io/remotecis)
 - Prepare settings.yml for container and CNF projects information  
   The details of each container certification project type are shown on next sections
 - Set `auto-publish` parameter to `on` under container project settings tab
-
   ![Auto Publish ](img/projectAutoPublish.png)
+  
 ## Automation Container Certification Flow
 ![Automation Container Cert Workflow](img/automation-container-certification-flow.png)
 
 ### Auto Publish Preparations
-
 - OCP and DCI ENV (included dcirc.sh,install.yml etc..)
-Any OCP Cluster and a helper node with DCI RPM packages installed
-- Settings.yml
-A Settings with DCI auto-publish enhancement feature
-- Auth.json
-Docker Authentication file to access OCI compatible container repo on partner private registry.
-Here is a example of using quay.io registry and run podman/docker on your jumphost and linux machine , 
-   - Login to your private registry server
-   
-    ``` 
-    $ podman login -u testuser quay.io
-    ```
-   - use echo command to locate your auth.json file for your private registry:
-      ```
-      $ echo $XDG_RUNTIME_DIR
-	        /run/user/4205315/containers/auth.json
-      ```  
-more info can be found this link
-If you are using other OCI compatible container repository, just get auth.json ready for tool to use
-- Pyxis-apikey.txt
+Any OCP Cluster and a helper node with DCI RPM packages installed  
+- Settings.yml 
+A Settings with DCI auto-publish enhancement feature 
+- Auth.json 
+Docker Authentication file to access OCI compatible container repo on partner private registry. Here is a example of using quay.io registry and run podman/docker on your jumphost and linux machine. 
+- Login to your private registry server   
+```bash
+$ podman login -u testuser quay.io
+```
+- use echo command to locate your auth.json file for your private registry: 
+```
+$ echo $XDG_RUNTIME_DIR
+ /run/user/4205315/containers/auth.json
+```  
+For more info can be found this link If you are using other OCI compatible container repository, just get auth.json ready for tool to use  
+- Pyxis-apikey.txt 
 A token to access specific partner portal( connect.redhat.com) Pyxis  data using REST API. Create Pyxis API Key 
-- Kubeconfig
-A kubeconfig that is used to access the OCP cluster on which CNF with all its artifacts will either be deployed or has already been deployed for CNF certification test
-- Product-listing ID
-Before a container or helm chart/operator can be publicly listed into RedHat catalog, a Product-Listing must be created, it only needs to be created once according to CNF type. Follow this link to [Create-Product-Listing](https://connect.redhat.com/manage/products)
-- Organization ID
+- Kubeconfig 
+A kubeconfig that is used to access the OCP cluster on which CNF with all its artifacts will either be deployed or has already been deployed for CNF certification test 
+- Product-listing ID 
+Before a container or helm chart/operator can be publicly listed into RedHat catalog, a Product-Listing must be created, it only needs to be created once according to CNF type. Follow this link to [Create-Product-Listing](https://connect.redhat.com/manage/products) 
+- Organization ID 
 Mandatory when using create_container_project. Company ID will be used for the verification of the container certification project Organization-ID Company-Profile. 
-
-
-Login to your private registry server:
+Login to your private registry server: 
 ```shellSession
 $ podman login -u testuser quay.io
 $ echo $XDG_RUNTIME_DIR
 /run/user/4205315/containers/auth.json
 ```
-  
 - **Pyxis-apikey.txt**    
-A token to access specific partner Pyxis catalog data using REST API. [Create Pyxis API Key](https://connect.redhat.com/account/api-keys)
- 
-- **Kubeconfig**    
-A kubeconfig that can access the OCP cluster
- 
-- **Product-listing ID**    
+A token to access specific partner Pyxis catalog data using REST API. [Create Pyxis API Key](https://connect.redhat.com/account/api-keys) 
+- **Kubeconfig** 
+A kubeconfig that can access the OCP cluster 
+- **Product-listing ID** 
 Before a container or helm chart/operator can be publicly listed into RedHat catalog, a Product-Listing must be created, it only need to create once according to CNF type.
 Follow this link to [Create-Product-Listing](https://connect.redhat.com/manage/products)
- 
-- **Organization ID**    
+- **Organization ID** 
 Mandatory when using create_container_project. Company ID will be used for the verification of container certification project Organization-ID Company-Profile.
-![Get Redhat OrgID](img/redhat-org-id.png)
+![Get Redhat OrgID](img/redhat-org-id.png) 
 
 ### Auto Publish Settings Configuration
 settings.yml:
