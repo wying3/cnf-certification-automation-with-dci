@@ -121,12 +121,9 @@ preflight_containers_to_certify:
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo1:v120"
     create_container_project: true
     short_description: "I am doing a full-automation e2e auto-publish for following image auto-publish-ubi8-nginx-demo1:v120"
-    attach_product_listing: true
-
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo2:v120"
     create_container_project: true
     short_description: "I am doing a full-automation e2e auto-publish for following image auto-publish-ubi8-nginx-demo2:v120"
-    attach_product_listing: true
 
 cert_settings:
    auto_publish: true
@@ -140,6 +137,7 @@ cert_settings:
    repository_description: "This is a test for Demo how to automate to create project, SCAN and update settings"
 
 cert_listings:
+  attach_product_listing: true
   published: true
   type: "container stack"
   pyxis_product_list_identifier: "yyyyyyyyyyyyyyyyy"  # product list id for container projects
@@ -166,24 +164,31 @@ Please note that these are just general steps and may vary depending on the spec
 dci_topic: OCP-4.12
 dci_name: Testing DCI to Recertify the certification container projects
 dci_configuration: Using DCI to Recertify the Certification container Project
-preflight_test_certified_image: true
 check_for_existing_projects: true
-ignore_project_creation_errors: true
 organization_id: 12345678
 dci_config_dirs: [/etc/dci-openshift-agent]
 partner_creds: "/var/lib/dci-openshift-app-agent/auth.json"
 preflight_containers_to_certify:
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo1:v121"
-    create_container_project: true
- 
+    pyxis_container_identifier: "111111111111111111111111"
   - container_image: "quay.io/avu0/auto-publish-ubi8-nginx-demo2:v121"
-    create_container_project: true
+    pyxis_container_identifier: "222222222222222222222222"
 
 pyxis_apikey_path: "/var/lib/dci-openshift-app-agent/pyxis-apikey.txt"
 dci_gits_to_components: []
 ...
 ```
-As you may have noticed, the create_container_project parameter is now set to true even when recertifying container projects. This is a new change that was recently made. The backend will now reject the creation of a container project if it is already in the active state, but the DCI will ignore this and continue with the recertification process
+This parameter `pyxis_container_identifier` is the container certification project from backend GUI.  
+There are two ways to get this container certification project-id.
+- Using REST API to access the backend
+```bash
+$ curl --silent -X 'GET'  'https://catalog.redhat.com/api/containers/v1/vendors/org-id/nnnnn/projects/certification?page_size=200&page=0'   -H 'accept: application/json' -H "X-API-KEY: xxxxxxxxxxxxxxxxxxxxx"|jq -r '.data[] | select(.name | startswith("imageprefix-")) | .name+": "+._id'
+```
+- Uing backend GUI from connect.redhat.com
+  Click on an existing container certification project like this:
+  https://connect.redhat.com/projects/64ff6eea4f57e362ac17a699/overview
+  This ID `64ff6eea4f57e362ac17a699` is the project-id
+
 ## E2E Automation Certification Of Operator Bundle Project
 This represents a new enhancement to the end-to-end (E2E) certification process for operators in conjunction with DCI. It involves the automation of updates and the attachment of product listings. Tatiana, a member of the DCI team, has authored a blog post that contains specific information about the prerequisites and settings related to this improvement. You can access the blog post by following this link: [end-to-end-certification-of-operators-with-dci](https://blog.distributed-ci.io/preflight-integration-in-dci.html#end-to-end-certification-of-operators-with-dci).
 
