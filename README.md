@@ -189,6 +189,12 @@ $ curl --silent -X 'GET'  'https://catalog.redhat.com/api/containers/v1/vendors/
   https://connect.redhat.com/projects/64ff6eea4f57e362ac17a699/overview
   This ID `64ff6eea4f57e362ac17a699` is the project-id
 
+Note: When recertifying a container project, any changes within the container image layers will alter the image's digest. For example, suppose busybox:v1 is already certified and published to the catalog. If there's an update or change to the busybox image, generating a new image tag busybox:v2, the preflight scan will examine and submit the results of the container image for busybox:v2 as the second entry result from the backend. Even if the user chooses to keep the original tag v1, the preflight will still submit the result as the second entry result with the same image name busybox:v1 but a different sha256 value.
+
+Example,
+![ResultEntry with same tag but different digest](img/recertify-with-same-tag.png) 
+
+
 ## E2E Automation Certification Of Operator Bundle Project
 This represents a new enhancement to the end-to-end (E2E) certification process for operators in conjunction with DCI. It involves the automation of updates and the attachment of product listings. Tatiana, a member of the DCI team, has authored a blog post that contains specific information about the prerequisites and settings related to this improvement. You can access the blog post by following this link: [end-to-end-certification-of-operators-with-dci](https://blog.distributed-ci.io/preflight-integration-in-dci.html#end-to-end-certification-of-operators-with-dci).
 
