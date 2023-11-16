@@ -2,16 +2,16 @@ Table of Contents
 =================
 
 * [Table of Contents](#table-of-contents)
-* [Automate certification process by utilizing DCI to interact with the certification portal backend](#automate-certification-process-by-utilizing-dci-to-interact-with-the-certification-portal-backend)
+* [Introduction](#automate-certification-process-by-utilizing-dci-to-interact-with-the-certification-portal-backend)
    * [Prerequisites](#prerequisites)     
-   * [Automation Container Certification Flow](#automation-container-certification-flow)
-      * [Auto Publish Preparations](#auto-publish-preparations)
-      * [Auto Publish Settings Configuration](#auto-publish-settings-configuration)
+   * [Container Certification and Publish](#automation-container-certification-flow)
+      * [ Container pre-testing](#auto-publish-preparations)
+      * [Certify container and publish to eco-system catalog](#auto-publish-settings-configuration)
    * [Recertify Certification Container Projects](#recertify-certification-container-projects)
       * [Recertify Settings Configuration](#recertify-settings-configuration)
    * [E2E Automation Certification Of Operator Bundle Project](#e2e-automation-certification-of-operator-bundle-project)
       * [E2E Certification Settings Of Operator Bundle](#e2e-certification-settings-of-operator-bundle)
-   * [Automate creation of the Openshift-cnf project for Vendor Validated](#automate-creation-of-the-openshift-cnf-project-for-vendor-validated)
+   * [Automate CNF Red Hat certified](#automate-creation-of-the-openshift-cnf-project-for-vendor-validated)
       * [Global Variables](#global-variables)
       * [Variables to define for each cnf_to_certify](#variables-to-define-for-each-cnf_to_certify)
       * [Variables to define for project settings under cert_listings main variable](#variables-to-define-for-project-settings-under-cert_listings-main-variable)
@@ -19,49 +19,66 @@ Table of Contents
    * [Automate Helm Chart Certification Project](#automate-helm-chart-certification-project)
       * [Settings For Automate Helm Chart](#settings-for-automate-helm-chart)
       * [Helm Chart Deploy and PR Chain Settings](#helm-chart-deploy-and-pr-chain-settings)
-   * [Run Chart Verifier and TNF Suite Test Together](#run-chart-verifier-and-tnf-suite-test-together)
+   * [Automate Helm chart and CNF certification testing Together](#run-chart-verifier-and-tnf-suite-test-together)
       * [Example of chart-verifier and TNF Test Suite Settings Configuration](#example-of-chart-verifier-and-tnf-test-suite-settings-configuration)
    * [How to Run DCI Auto-publish, Recertify, Operator, HelmChart and Openshift-cnf Vendor validated](#how-to-run-dci-auto-publish-recertify-operator-helmchart-and-openshift-cnf-vendor-validated)
    * [Known Issues](#known-issues)
    * [Links](#links)
 
-# Automate certification process by utilizing DCI to interact with the certification portal backend
-This repository provides an automated certification process for container projects, along with their automatic publication. It encompasses both new container certification and new release recertification by leveraging offered by DCI. It also includes a procedure of Openshift-cnf certification project auto creation for Vendor Validation and CNF certification.
-The process for certifying a new container involves creating a container project, adding or modifying mandatory project parameters, testing and scanning container images, attaching container projects to a product listing, and auto publishing container projects once all requirements are fulfilled.
-The process for recertifying existing container projects involves retesting and rescanning new release container images, updating the container’s version, its digest and tag, and republishing to the catalog.
+# Introduction
 
-Finally, a streamlined approach has been implemented, combining Vendor Validation) and CNF certification tasks into a single openshift cnf project workflow. Under this new process, Vendor Validation must be completed and published before the CNF certification task is initiated, which is optional and dependent on the Vendor Validation results. This has been automated into DCI job as well.
+This article outlines a comprehensive automated certification process designed to facilitate the complete certification of Cloud-Native Network Functions (CNFs). This includes container certification, Helm chart certification, and/or operator certification, culminating in CNF certification. The procedure initiates with container certification, progresses through Helm chart certification, and culminates in CNF certification.
 
+The scope of this process extends to both initial CNF certification and the recertification of new releases, utilizing the capabilities of the DCI tool. Additionally, it incorporates a method for automatic creation of Openshift-cnf certification projects, which are essential for Vendor Validation and subsequent CNF certification.
 
+For new container certification, the process involves several key steps: the creation of a container project, updating or adding essential project parameters, conducting tests and scans on container images, linking container projects to a product listing, and ultimately, the automatic publication of container projects once they meet all criteria.
+
+The certification process for Helm charts includes creating a Helm chart project, conducting chart tests, and submitting a pull request to merge the test report into the public chart repository.
+
+In the realm of CNF certification, the process entails the creation of a CNF project, executing CNF tests, and uploading the test report into the project. This approach efficiently integrates Vendor Validation and CNF certification tasks within a single Openshift CNF project workflow. Under this system, Vendor Validation, which must be completed and published prior to initiating the CNF certification task, is a prerequisite. The commencement of CNF certification is optional and contingent on the outcomes of Vendor Validation.
  
  
 ## Prerequisites
 
 - Set up a jumphost with internet access, install the dci-openshift-appagent, detailed guide can be found in this link [dci-openshift-app-agent-install](https://doc.distributed-ci.io/dci-openshift-app-agent/) 
 - It is recommended consistently check latest version of the DCI app agent package, and upgrade to latest version if it not before to use
-```bash
+    
+  ```bash
 $ sudo dnf upgrade --refresh --repo dci -y
+
 ```
 - If the upgrade or re-installation of the latest DCI repository is not functioning correctly, try using the "install-dci-packages" method provided in the following link above
 ```bash	
-$ sudo dnf remove dci-openshift-app-agent -y
+  $ sudo dnf remove dci-openshift-app-agent -y
+
 $ sudo dnf install dci-openshift-app-agent -y
+
 ```
 - DCI Control server credential create remote-ci credentials
 - Prepare settings.yml for container and CNF projects information
 The details of each container certification project type are shown on next sections
+
+
 - Set auto-publish parameter to ON under container project settings tab (connect.redhat.com)
+
 - DCI Control server credential
   [create remote-ci credentials](https://www.distributed-ci.io/remotecis)
 - Prepare settings.yml for container and CNF projects information  
   The details of each container certification project type are shown on next sections
 - Set `auto-publish` parameter to `on` under container project settings tab
   ![Auto Publish ](img/projectAutoPublish.png)
+
   
 ## Automation Container Certification Flow
 ![Automation Container Cert Workflow](img/automation-container-certification-flow.png)
 
-### Auto Publish Preparations
+### Container Certification and Publish
+#### Container pre-testing
+
+When preparing for container certification for the first time, it is suggested to utilize the preflight test tool in a distinct stage. Initially, conducting a pre-test allows for a thorough examination of the container, pinpointing any potential issues that might lead to failure in the actual certification phase. Once these issues are identified and reported, the partner engineering team can then focus on resolving these problems and subsequently re-verify the solutions using the pre-testing procedure.
+
+DCI configuration and prerequites for pre-testing.
+
 - OCP and DCI ENV (included dcirc.sh,install.yml etc..)
 Any OCP Cluster and a helper node with DCI RPM packages installed  
 - Settings.yml 
@@ -103,7 +120,7 @@ Follow this link to [Create-Product-Listing](https://connect.redhat.com/manage/p
 Mandatory when using create_container_project. Company ID will be used for the verification of container certification project Organization-ID Company-Profile.
 ![Get Redhat OrgID](img/redhat-org-id.png) 
 
-### Auto Publish Settings Configuration
+### DCI Settings.yaml Configuration with project creation, product listing attachming and auto publishing
 settings.yml:
 
 ```yaml
@@ -113,7 +130,7 @@ dci_name: Testing DCI to create certification Project Automatic and Update manda
 dci_configuration: Using DCI create project,update,submit result and auto-publish
 preflight_test_certified_image: true
 check_for_existing_projects: true
-ignore_project_creation_errors: true
+#ignore_project_creation_errors: true
 dci_config_dirs: [/etc/dci-openshift-agent]
 partner_creds: "/var/lib/dci-openshift-app-agent/auth.json"
 organization_id: 12345678
@@ -126,7 +143,7 @@ preflight_containers_to_certify:
     short_description: "I am doing a full-automation e2e auto-publish for following image auto-publish-ubi8-nginx-demo2:v120"
 
 cert_settings:
-   auto_publish: true
+   auto_publish: false
    build_categories: "Standalone image"
    registry_override_instruct: "<p>This is an instruction how to get the image link.</p>"
    email_address: "whoami@redhat.com"
@@ -147,9 +164,10 @@ dci_gits_to_components: []
 
 ```
 ## Recertify Certification Container Projects
-In the auto-publish process, we have seen the effectiveness of using DCI to communicate with the catalog backend, which enables full end-to-end automation for container certification.
 
-In the next recertification process, we can use a similar approach to recertify a new release of a certified container under an existing project. DCI is also able to recertify certification projects that are already active and published with a new release version and tag.
+For subsequent re-certification processes, a similar approach can be employed to recertify a new release of an already certified container within the same project. DCI is also capable of recertifying existing, active certification projects by incorporating a new release version and tag.
+
+Main prodedures for container re-certication:
 
 - Identify the certification projects that need to be recertified  
 - Update the certification project's release version and tag to the new release version and tag  
@@ -193,6 +211,7 @@ Note: When recertifying a container project, any changes within the container im
 
 Example,
 ![ResultEntry with same tag but different digest](img/recertify-with-same-tag.png) 
+
 
 
 ## E2E Automation Certification Of Operator Bundle Project
